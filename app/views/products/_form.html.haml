@@ -1,0 +1,12 @@
+= simple_form_for @product, html: {class: 'form-horizontal'} do |f|
+  %fieldset
+    = render "shared/error_messages", target: @product
+
+    = f.input :name
+    = f.input :identification, label: t(:unique_identifier), input_html: {class: 'span8'}
+    = f.input :description, input_html: {class:'span8', row: 3}, hint: 'Optional'
+
+    .form-actions
+      = f.submit class: 'btn btn-primary', value: t(:save)
+      = link_to t(:cancel), :back, class: 'btn'
+

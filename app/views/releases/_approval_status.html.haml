@@ -1,0 +1,43 @@
+%li[approval_status]
+  - case approval_status.status
+  - when :approved
+    .alert-message.alert.alert-success
+      %p
+        %strong= approval_status.approval_step.name
+      .approval-status-text Approved
+
+  - when :rejected
+    .alert-message.alert.alert-error
+      %p
+        %strong= approval_status.approval_step.name
+      .approval-status-text Rejected
+      .approval-status-rejection-reason
+        %em Reason:
+        = approval_status.reason
+
+  - when :unavailable
+    .alert-message.alert.alert-info
+      %p.unavailable
+        %strong= approval_status.approval_step.name
+
+  - when :pending
+    .alert-message.alert
+      %p
+        %strong= approval_status.approval_step.name
+
+      - if can? :approve, approval_status.approval_step
+        .approval-actions
+          = form_for [approval_status.release.becomes(Release), approval_status], html: {id: 'approval-form'} do |f|
+            = hidden_field_tag 'approval_status[approval_step_id]', approval_status.approval_step.id
+            = hidden_field_tag 'approval_status[status]', :approved
+            = hidden_field_tag 'approval_status[user_id]', current_user.id
+            = f.submit class: 'btn btn-success', value: 'Approve'
+
+          = form_for [approval_status.release.becomes(Release), approval_status], html: {id: 'rejection-form'} do |f|
+            = hidden_field_tag 'approval_status[approval_step_id]', approval_status.approval_step.id
+            = hidden_field_tag 'approval_status[status]', :rejected
+            = hidden_field_tag 'approval_status[user_id]', current_user.id
+            = hidden_field_tag 'approval_status[reason]'
+            = f.submit class: 'btn error reject', value: 'Reject'
+      - else
+        %p.unavailable== Awaiting approval by #{approval_status.approval_step.group.name}

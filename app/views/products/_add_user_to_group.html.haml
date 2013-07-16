@@ -1,0 +1,15 @@
+= simple_form_for [@product, @group, @group.users.new], html: {class:'form-horizontal'} do |f|
+  .modal-header
+    %h3=t :add_user_to_group, group: @group.name
+  .modal-body
+    %fieldset
+      = hidden_field_tag :existing_user_id, nil
+      = f.input :name
+      = f.input :email
+      = f.input :invitation_message, as: :text, input_html: {value: t(:invitation_default_text, product: @product.name), rows: 2}
+  .modal-footer
+    = f.submit class: 'btn btn-primary', value: t(:save)
+    = link_to t(:cancel), '#', class: 'btn modal-cancel'
+
+#name-autocomplete-link{style: 'display:none;'}= link_to 'Autocomplete by name', autocomplete_users_path(field: :name)
+#email-autocomplete-link{style: 'display:none;'}= link_to 'Autocomplete by email', autocomplete_users_path(field: :email)

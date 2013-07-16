@@ -1,0 +1,10 @@
+.modal#add-group-form{style: 'display:none;'}
+  = simple_form_for [@product, @product.groups.new], html: {class: 'form-horizontal'} do |f|
+    .modal-header
+      %h3=t :add_group
+    .modal-body
+      %fieldset
+        = f.input :name
+    .modal-footer
+      = f.submit class: 'btn btn-primary', value: t(:save)
+      = link_to t(:cancel), '#', class: 'btn modal-cancel'

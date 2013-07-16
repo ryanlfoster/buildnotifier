@@ -1,0 +1,44 @@
+.page-header
+  %h2 All products
+
+- if @products
+  %ul.products.unstyled
+    - @products.each do |product|
+      %li[product]
+        .container
+          %h4
+            - if can? :view, product.releases.first 
+              = link_to product do
+                = product.name || "???"
+                %small
+                  = product.identification || 'View product releases'
+            - else
+              = product.name || "???"
+              %small
+                = product.identification || 'View product releases'
+
+
+          %p
+            - if product.releases.any?
+              - version = "Latest version #{product.releases.first.version}"
+              
+              - case product.releases.first.overall_status
+              - when :approved
+                %span.label.label-success== #{version} approved
+              - when :rejected
+                %span.label.label-important{rel: 'popover', 'data-placement' => 'below', title: 'Rejection reason', 'data-content' => product.releases.first.rejection_reason}== #{version} rejected
+              - else
+                %span.label.label-warning== #{version} pending approval#{": #{product.releases.first.next_step_name}" if product.releases.first.next_step_name}
+
+              &nbsp;
+
+              %span.label= product.releases.first.created_at.strftime('%B %e, %Y %T')
+
+            - else
+              %span.label.label-notice No releases yet
+
+          - if product.releases.any?
+            %p
+              = link_to release_action_text(product.releases.first), download_path(product.releases.first), class: 'btn btn-primary'
+- else
+  = t :no_product_yet

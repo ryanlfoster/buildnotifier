@@ -1,0 +1,15 @@
+= simple_form_for @release, html: { class: 'form-horizontal' } do |f|
+  %fieldset
+    %legend= @release.persisted? ? "Edit web release" : "Create web release"
+
+    = render "shared/error_messages", target: @release
+
+    = f.input :name, hint: 'Required for first release of a product, optional for later releases'
+    = f.input :version, hint: 'Enter git revision or leave blank to use the current date and time'
+    = f.input :identification, label: 'URL', hint: 'Full URL to use for testing' 
+    = f.input :notes, as: :text, label: 'Release notes', hint: 'Markdown formatting', input_html: { class: 'span10', rows: 6 }
+
+    .form-actions
+      = f.submit class: 'btn btn-primary', value: 'Save'
+      = link_to 'Cancel', :back, class: 'btn'
+

@@ -1,0 +1,13 @@
+%h3== #{@release.descriptive_name} has just had a status change
+
+- if @actioner
+  %p== #{@actioner.name} #{@new_status.to_s} step: #{@approval_step.name}
+- else
+  %p== #{@approval_step.name} is now #{@new_status.to_s} 
+
+- if @new_status == :rejected
+  %p== The rejection reason was: #{@approval_status.reason}
+
+%p== The overall status of #{@release.descriptive_name} is currently #{@release.overall_status}
+
+%p= link_to 'View release', release_url(@release)

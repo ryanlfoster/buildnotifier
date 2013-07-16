@@ -1,0 +1,16 @@
+!!! XML
+<!DOCTYPE html>
+%html{html_attrs}
+  %head
+    %meta{'http-equiv' => "content-type", :content => "text/html;charset=UTF-8"}
+    = stylesheet_link_tag 'http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css'
+    = stylesheet_link_tag 'application'
+  %body
+    .topbar
+      .topbar-inner
+        .container
+          %h3
+            .brand= t(:build_notifier)
+
+    .container
+      = yield

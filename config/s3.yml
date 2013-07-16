@@ -1,0 +1,9 @@
+staging:
+  bucket: build-notifier-staging
+  access_key_id: <%= ENV['s3_key'] %>
+  secret_access_key: <%= ENV['s3_secret'] %> 
+
+production:
+  bucket: build-notifier-production
+  access_key_id: <%= ENV['s3_key'] %>
+  secret_access_key: <%= ENV['s3_secret'] %> 

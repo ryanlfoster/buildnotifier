@@ -1,0 +1,12 @@
+= form_tag @password_reset, class: 'form-horizontal'  do
+  %fieldset
+    %legend Reset password
+
+    .control-group
+      = label_tag :email, 'Email', class: 'control-label'
+      .controls
+        = text_field_tag :email, nil, class: 'input-text'
+
+    .form-actions
+      = submit_tag 'Reset password', class: 'btn btn-primary'
+

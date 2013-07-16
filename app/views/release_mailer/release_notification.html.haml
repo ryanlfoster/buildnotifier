@@ -1,0 +1,22 @@
+%h3== Approval needed from #{@approval_step.group.name} for #{@release.descriptive_name}
+
+%p
+  == A new release of #{@release.product.name} is awaiting approval on the "#{@approval_step.name}" step.
+  == You are a member of the #{@approval_step.group.name} group that is responsible for this approval step.
+
+%p
+  Here are the release notes for this release:
+
+.release-notes
+  .well=raw RDiscount.new(@release.notes).to_html
+
+%p
+  You can click
+  = link_to 'this link', release_url(@release)
+  to view the release and approve or reject it. If that link doesn't work, you can paste the following URL into your browser.
+
+%p
+  = link_to release_url(@release), release_url(@release)
+
+%p
+  Thank you for using Build Notifier!

@@ -1,0 +1,84 @@
+%ul.breadcrumb
+  - unless @header_link_hidden
+    %li
+      = link_to t(:all_products), products_path
+      %span.divider /
+  %li
+    = link_to @product.name, @product
+    %span.divider /
+  %li.active=t :product_manage
+
+%ul.nav.nav-tabs
+  %li{class: (params[:tab].blank? || params[:tab] == 'details') ? 'active' : nil}
+    = link_to t(:product_edit_info), '#details-tab', 'data-toggle' => 'tab'
+  %li{class: params[:tab] == 'groups-approvals' ? 'active' : nil}
+    = link_to t(:product_manage_groups_approval_steps), '#groups-approvals-tab', 'data-toggle' => 'tab'
+
+.tab-content.pull-left
+  #details-tab.tab-pane{class: (params[:tab].blank? || params[:tab] == 'details') ? 'active' : nil}
+    .page-header
+      %h4=t :product_details
+    = render 'form'
+
+  #groups-approvals-tab.tab-pane.container{class: params[:tab] == 'groups-approvals' ? 'active' : nil}
+    .row-fluid
+      .span8
+        .page-header
+          %h4
+            =t :groups
+            .header-action
+              %small= link_to t(:add_group), new_product_group_path(@product), {"data-toggle" => "modal", "data-target" => "#add-group-form", :class => "btn btn-dander"}
+              %small.action= link_to t(:add_user), new_product_user_path(@product), remote: true, class: 'add-user-link btn'
+
+        %ul.groups.unstyled
+          - @product.groups.each do |group|
+            %li[group]
+              .well
+                %small.action= link_to t(:add_user), new_product_group_user_path(@product, group), remote: true, class: 'add-user-link btn'
+                %h5
+                  = group.name
+
+                %ul.group-members.unstyled
+                  - group.users.each do |member|
+                    %li.alert.alert-info
+                      = link_to raw('&times;'), product_group_user_path(@product, group, member), method: :delete, confirm: t(:confirm_remove_user), class: 'close'
+                      %p{style: "background-image: url(#{gravatar(member, 30)})"}
+                        = member.name
+
+                .permissions= render partial: 'permissions', object: group
+
+                %p.delete-group
+                  %small= link_to t(:delete_group), product_group_path(@product, group), method: :delete, confirm: t(:confirm_delete), class: 'btn btn-danger'
+
+      .span4
+        .page-header
+          %h4
+            Approval steps
+            .header-action
+              %small= link_to t(:approval_step_add), new_product_approval_step_path(@product),
+                {"data-toggle" => "modal", "data-target" => "#add-step-form", class: "btn"}
+
+        %p.approval-help.help-block= t(:approval_step_drag)
+
+        .sort-link{style: 'display:none;'}= link_to 'Sort', sort_product_approval_step_path(@product)
+        %ul.approval-steps.unstyled
+          - @product.approval_steps.each do |approval_step|
+            %li[approval_step]
+              .alert-message.block-message.info
+                = link_to raw('&times;'),
+                  product_approval_step_path(@product, approval_step),
+                  method: :delete,
+                  confirm: t(:approval_step_confirm_delete),
+                  class: 'close'
+                %h5
+                  = approval_step.name
+                  %small= approval_step.group.try(:name)
+
+
+= render partial: 'add_group_modal'
+= render partial: 'add_step_modal'
+
+.modal#add-user-form{style: 'display:none;'}
+#spinner{style: 'display:none;'}
+  .spin-container
+    %img{src: asset_path('ajax-loader.gif')}

@@ -1,0 +1,20 @@
+= form_tag '/auth/identity/callback', class: 'form-horizontal' do
+  %fieldset
+    %legend Please log in
+
+    .control-group
+      = label_tag :auth_key, 'Email', class: 'control-label'
+      .controls
+        = text_field_tag :auth_key, nil, class: 'input-text'
+
+    .control-group
+      = label_tag :password, 'Password', class: 'control-label'
+      .controls
+        = password_field_tag :password, nil, class: 'input-password'
+
+    .control-group
+      .controls
+        = link_to 'Reset password', new_password_reset_path
+
+    .form-actions
+      = submit_tag 'Log in', class: 'btn btn-primary'

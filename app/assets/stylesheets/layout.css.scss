@@ -1,0 +1,143 @@
+body {
+  padding-top: 50px;
+}
+
+.release-icon {
+  float: left;
+  padding: 6px;
+}
+
+.release-actions {
+  float: right;
+  padding: 6px;
+}
+
+.release, .product {
+  @extend .page-header;
+  border-bottom: 1px solid #ddd;
+}
+
+.release-notes {
+  margin-bottom: 20px;
+
+  .well {
+    margin-bottom: 0;
+  }
+
+  .show-hide {
+    cursor: pointer;
+  }
+}
+
+.page-header h4 .header-action {
+  display: block;
+  float: right;
+}
+
+.approvals form {
+  display: inline;
+  margin: 0;
+}
+
+.approval-status-text {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 18px !important;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.approval-status-rejection-reason {
+  color: #555;
+  font-size: 13px;
+  line-height: 18px !important;
+}
+
+.release-header {
+  margin-bottom: 6px;
+
+  small {
+    color: #bfbfbf;
+  }
+}
+
+.unavailable {
+  color: #999;
+}
+
+.avatar {
+  background: 4px 4px no-repeat;
+  padding-left: 38px;
+}
+
+.groups {
+  .action {
+    display: block;
+    float: right;
+    line-height: 18px;
+  }
+
+  p.delete-group {
+    margin-top: 15px;
+  }
+}
+
+.group-members {
+  margin: {
+    top: 10px;
+  }
+
+  li {
+    margin: {
+      top: 7px;
+      bottom: 7px;
+    }
+
+    p {
+      background-repeat: no-repeat;
+      line-height: 30px;
+      min-height: 30px;
+      padding: {
+        left: 37px;
+      }
+      margin: 0;
+    }
+  }
+}
+
+.spin-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.permissions {
+  .label {
+    margin-right: 3px;
+  }
+
+  a {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+      color: #ffffff;
+    }
+  }
+}
+
+.permissions .spinner {
+  text-align: center;
+}
+
+.tab-content > div {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.approval-steps h5 small {
+  margin-left: 15px;
+}
+

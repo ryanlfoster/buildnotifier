@@ -1,0 +1,15 @@
+= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f|
+  %fieldset
+    %legend Edit profile
+
+    = f.input :name
+    = f.input :email
+
+    - if @user.has_authorization(:identity)
+      = f.input :old_password, input_html: {name: 'old_password'} 
+      = f.input :password, label: 'New password', input_html: {name: 'password'} 
+      = f.input :password_confirmation, label: 'Confirm new password', input_html: {name: 'password_confirmation'} 
+
+    .form-actions
+      = submit_tag 'Save', class: 'btn btn-primary'
+      = link_to 'Cancel', :back, class: 'btn'

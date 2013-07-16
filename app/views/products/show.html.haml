@@ -1,0 +1,19 @@
+%ul.breadcrumb
+  - unless @header_link_hidden
+    %li
+      = link_to t(:all_products), products_path
+      %span.divider /
+  %li.active= @product.name
+
+- if can? :manage, @product
+  %p= link_to t(:product_manage), edit_product_path(@product), class: "btn"
+
+.row
+  .span8
+    .page-header
+      %h4 Releases
+    %ul.releases.unstyled
+      - @product.releases.each do |release|
+        - if can? :view, release
+          %li.release[release]
+            = render partial: "releases/release", object: release

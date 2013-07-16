@@ -1,0 +1,14 @@
+%p
+  %strong=t :members_can
+
+%p.permission-list
+  - Group::PERMISSIONS.each do |permission|
+    = link_to product_group_path(@product, permissions, toggle_permission: permission),
+      method: :put,
+      remote: true,
+      class: "label small #{'label-success' if permissions.permissions.include?(permission)}",
+      title: t(:click_to_toggle) do
+      = Group.permission_description(permission)
+
+%p.spinner{style: 'display:none;'}
+  %img{src: asset_path('ajax-loader-sm.gif')}

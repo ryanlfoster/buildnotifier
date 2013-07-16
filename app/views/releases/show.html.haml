@@ -1,0 +1,40 @@
+%ul.breadcrumb
+  - unless @header_link_hidden
+    %li
+      = link_to t(:all_products), products_path
+      %span.divider /
+  %li
+    = link_to @release.product.name, @release.product
+    %span.divider /
+  %li.active= @release.descriptive_name
+
+- if can? :manage, @release.product
+  %p= link_to t(:product_manage), edit_product_path(@release.product), class: 'btn'
+
+.row
+  .span8
+    = render partial: "release", object: @release
+  .span4
+    .page-header
+      %h4
+        Approval steps
+
+        - if can? :manage, @release
+          .header-action
+            %small= link_to 'Reset', reset_release_approval_statuses_path(@release),
+              method: :put, confirm: "Are you sure you want to reset approval statuses for this release?"
+
+    %ul.approvals.unstyled
+      = render partial: "approval_status", collection: @release.approval_statuses
+
+.modal#set-rejection-reason{style: 'display:none;'}
+  .modal-header
+    %h3 Reason for rejection
+  .modal-body
+    = form_tag do
+      .clearfix
+        = label_tag :reason
+        .input= text_area_tag :reason, nil, rows: 5, class: 'span6'
+  .modal-footer
+    = link_to 'Save', '#', class: 'btn primary', id: 'rejection-reason-save'
+    = link_to 'Cancel', '#', class: 'btn modal-cancel'

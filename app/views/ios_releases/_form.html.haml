@@ -1,0 +1,15 @@
+= simple_form_for @release, html: {multipart: true, class: 'form-horizontal'} do |f|
+  %fieldset
+    %legend= @release.persisted? ? "Edit iOS release" : "Create iOS release"
+
+    = render "shared/error_messages", target: @release
+
+    - if @release.ipa.exists?
+      = f.input :ipa, label: 'IPA file', hint: 'IPA file already uploaded, choose another file to replace the existing IPA'
+    - else
+      = f.input :ipa, label: 'IPA file'
+    = f.input :notes, label: 'Release notes', as: :text, hint: 'Markdown formatting', input_html: { class: 'span10', cols: 40, rows: 6 }
+
+    .form-actions
+      = f.submit class: 'btn btn-primary', value: 'Save'
+      = link_to 'Cancel', :back, class: 'btn'

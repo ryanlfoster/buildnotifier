@@ -1,0 +1,8 @@
+- if @releases
+  %ul.releases.unstyled
+    - @releases.each do |release|
+      - if can? :view, release
+        %li.release[release]
+          = render partial: "release", object: release
+- else
+  = t :no_release_yet

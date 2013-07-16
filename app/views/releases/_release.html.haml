@@ -1,0 +1,52 @@
+.release-container
+
+  - if can? :manage, release
+    .release-actions
+      = link_to 'Edit', edit_polymorphic_path(release), class: 'btn small btn-info'
+      = link_to 'Delete', release, method: :delete, confirm: 'Are you sure you want to delete this release?', class: 'btn small btn-danger'
+
+  .release-header
+    - if current_page? release_path(release)
+      = release_icon(release)
+      %h4
+        %strong= release.descriptive_name
+      %small= (release.identification || 'View release')
+    - else
+      = link_to release_path(release) do
+        = release_icon(release)
+        %h4
+          %strong= release.descriptive_name
+        %small= (release.identification || 'View release')
+
+  %p
+    - case release.overall_status
+    - when :approved
+      %span.label.label-success Approved
+    - when :rejected
+      %span.label.label-important{rel: 'popover', 'data-placement' => 'below', title: 'Rejection reason', 'data-content' => release.rejection_reason} Rejected
+    - else
+      %span.label.label-warning== Pending approval#{": #{release.next_step_name}" if release.next_step_name}
+
+    %span.label
+      Version
+      = release.version
+
+    &nbsp;
+
+    %span.label= release.created_at.strftime('%B %e, %Y %T')
+
+  %p
+    = link_to release_action_text(release), download_path(release), class: 'btn btn-primary large'
+
+  .release-notes
+    - if current_page? release_path(release)
+      %h5
+        Release notes
+      .well
+        =raw RDiscount.new(release.notes).to_html
+    - else 
+      %h5
+        Release notes
+        %small.show-hide (show/hide)
+      .well{style: 'display:none;'}
+        =raw RDiscount.new(release.notes).to_html

@@ -1,0 +1,10 @@
+%h3== #{@release.descriptive_name} was just #{@release.overall_status.to_s}
+
+- if @release.overall_status == :approved
+  %p
+    == Congratulations! Your release of #{@release.product.name} (version #{@release.version}) has been approved!
+    All of the specified approval steps have been passed and you're ready to push your product live.
+- elsif @release.overall_status == :rejected
+  %p
+    == Oh no! Your release of #{@release.product.name} (version #{@release.version}) was rejected!
+    The rejection reason was "#{@release.rejection_reason}". Better luck next time!

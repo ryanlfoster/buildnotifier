@@ -1,0 +1,12 @@
+defaults: &defaults
+  email_sender: 'build-notifier@intridea.com' 
+  domain: 'localhost'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

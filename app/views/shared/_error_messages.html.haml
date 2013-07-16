@@ -1,0 +1,6 @@
+- if target.errors.any?
+  .well.alert-error
+    %span.error-explanation= t(:error_explanation)
+    %ul
+      - target.errors.full_messages.each do |error|
+        %li= error

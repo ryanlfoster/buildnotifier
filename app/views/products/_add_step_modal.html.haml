@@ -1,0 +1,11 @@
+.modal#add-step-form{style: 'display:none;'}
+  = simple_form_for [@product, @product.approval_steps.new], html: {class:'form-horizontal'} do |f|
+    .modal-header
+      %h3=t :approval_step_add
+    .modal-body
+      %fieldset
+        = f.input :name
+        = f.input :group_id, label: t(:approval_step_responsible_group), collection: @product.groups.select(&:persisted?).map{|g|[g.name, g.id]}
+    .modal-footer
+      = f.submit class: 'btn btn-primary', value: t(:save)
+      = link_to t(:cancel), '#', class: 'btn modal-cancel'

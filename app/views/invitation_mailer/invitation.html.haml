@@ -1,0 +1,8 @@
+= @invite.message
+
+%p
+  To accept this invitation and sign up for Build Notifier,
+  = link_to 'follow this link', claim_invitation_url(id: @invite.id, code: @invite.code)
+  or paste the following URL into your browser.
+
+%p= link_to claim_invitation_url(id: @invite.id, code: @invite.code), claim_invitation_url(id: @invite.id, code: @invite.code)

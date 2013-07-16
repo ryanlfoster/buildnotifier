@@ -1,0 +1,27 @@
+defaults: &defaults
+  options:
+    identity_map_enabled: true
+
+development:
+  <<: *defaults
+  sessions:
+    default:
+      hosts: 
+        - localhost
+      database: build_notifier_development
+
+test:
+  <<: *defaults
+  sessions:
+    default:
+      hosts: 
+        - localhost
+      database: build_notifier_test
+
+production:
+  <<: *defaults
+  sessions:
+    default:
+      hosts:
+        - localhost
+      database: build_notifier_production
