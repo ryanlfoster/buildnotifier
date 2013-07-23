@@ -35,7 +35,7 @@ class PlistParser
       plist_bin = nil
 
       Zip::ZipFile.foreach(ipa_file) do |f|
-        if f.name.match(/Payload\/[A-Za-z]*\.app\/Info.plist/)
+        if f.name.match(/Payload\/(.)*\.app\/Info.plist/)
           plist_bin = f.get_input_stream.read
         end
       end
